@@ -27,7 +27,7 @@ def main(memory):
         bank = select_bank(memory)
         reallocate(memory, bank)
 
-    return len(seen_states)
+    return len(seen_states), memory
 
 
 if __name__ == '__main__':
