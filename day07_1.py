@@ -1,5 +1,8 @@
+from collections import defaultdict
+
+
 def get_supports(lines):
-    rv = {}
+    rv = defaultdict(list)
 
     for line in lines:
         if '->' in line:
