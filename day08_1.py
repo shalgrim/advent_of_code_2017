@@ -31,6 +31,7 @@ def matches(condition, registers, reg_to_check, value):
 
 def run_program(instructions):
     registers = defaultdict(lambda: 0)
+    max_val = 0
 
     for instruction in instructions:
         (
@@ -48,12 +49,15 @@ def run_program(instructions):
             else:
                 registers[reg_to_update] -= int(amount)
 
-    return registers
+        max_val = max(max_val, max(registers.values()))
+
+    return registers, max_val
 
 
 if __name__ == '__main__':
     with open('data/input08.txt') as f:
         instructions = [line.strip() for line in f.readlines()]
 
-    registers = run_program(instructions)
+    registers, max_val = run_program(instructions)
     print(max(registers.values()))
+    print(max_val)
