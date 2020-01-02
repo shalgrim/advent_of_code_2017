@@ -34,3 +34,9 @@ class TestDay09(TestCase):
     def test_score_groups(self):
         self.assertEqual(score_groups('{}'), 1)
         self.assertEqual(score_groups('{{{}}}'), 6)
+        self.assertEqual(score_groups('{{},{}}'), 5)
+        self.assertEqual(score_groups('{{{},{},{{}}}}'), 16)
+        self.assertEqual(score_groups('{<a>,<a>,<a>,<a>}'), 1)
+        self.assertEqual(score_groups('{{<ab>},{<ab>},{<ab>},{<ab>}}'), 9)
+        self.assertEqual(score_groups('{{<!!>},{<!!>},{<!!>},{<!!>}}'), 9)
+        self.assertEqual(score_groups('{{<a!>},{<a!>},{<a!>},{<ab>}}'), 3)
