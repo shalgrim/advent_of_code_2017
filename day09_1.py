@@ -25,8 +25,25 @@ def count_groups(s):
     return count
 
 
-def find_group_end(param):
-    return 1
+def find_group_end(s):
+    open_count = 1
+    chars_to_skip = 0
+    garbage_skip = 0
+
+    while open_count:
+        chars_to_skip += 1
+        if garbage_skip:
+            garbage_skip -= 1
+            continue
+
+        if s[chars_to_skip] == '}':
+            open_count -= 1
+        elif s[chars_to_skip] == '{':
+            open_count += 1
+        elif s[chars_to_skip] == '<':
+            garbage_skip = find_garbage_end(s[chars_to_skip+1])
+
+    return chars_to_skip
 
 
 def score_groups(s, outer_score=0):
