@@ -29,6 +29,7 @@ def find_group_end(s):
     open_count = 1
     chars_to_skip = 0
     garbage_skip = 0
+    canceled = False
 
     while open_count:
         chars_to_skip += 1
@@ -36,12 +37,16 @@ def find_group_end(s):
             garbage_skip -= 1
             continue
 
-        if s[chars_to_skip] == '}':
+        if canceled:
+            canceled = False
+        elif s[chars_to_skip] == '!':
+            canceled = True
+        elif s[chars_to_skip] == '}':
             open_count -= 1
         elif s[chars_to_skip] == '{':
             open_count += 1
         elif s[chars_to_skip] == '<':
-            garbage_skip = find_garbage_end(s[chars_to_skip+1])
+            garbage_skip = find_garbage_end(s[chars_to_skip+1:])
 
     return chars_to_skip
 
@@ -53,13 +58,21 @@ def score_groups(s, outer_score=0):
     this_score = outer_score + 1
     tracking_score = this_score
     chars_to_skip = 1
+    canceled = False
 
     for i, c in enumerate(s):
         if chars_to_skip:
             chars_to_skip -= 1
-        elif c == '{':
+        elif canceled:
+            canceled = False
+        elif c == '!' and not canceled:
+            canceled = True
+        elif c == '{' and not canceled:
             chars_to_skip = find_group_end(s[i:]) + 1
             tracking_score += score_groups(s[i:i + chars_to_skip], this_score)
+        elif c == '<' and not canceled:
+            chars_to_skip = find_garbage_end(s[i+1:])
+
 
     return tracking_score
 
