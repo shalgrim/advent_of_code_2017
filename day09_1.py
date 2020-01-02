@@ -73,7 +73,11 @@ def score_groups(s, outer_score=0):
         elif c == '<' and not canceled:
             chars_to_skip = find_garbage_end(s[i+1:])
 
-
     return tracking_score
 
 
+if __name__ == '__main__':
+    with open('data/input09.txt') as f:
+        content = f.read().strip()
+
+    print(score_groups(content))
