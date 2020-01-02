@@ -58,9 +58,9 @@ def score_groups(s, outer_score=0):
         if chars_to_skip:
             chars_to_skip -= 1
         elif c == '{':
-            chars_to_skip = find_group_end(s[i:])
-            tracking_score += score_groups(s[i:i + chars_to_skip])
+            chars_to_skip = find_group_end(s[i:]) + 1
+            tracking_score += score_groups(s[i:i + chars_to_skip], this_score)
 
-    return this_score
+    return tracking_score
 
 
