@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from day09_1 import count_groups, find_garbage_end, find_group_end, score_groups
+from day09_2 import count_garbage
 
 
 class TestDay09(TestCase):
@@ -40,3 +41,12 @@ class TestDay09(TestCase):
         self.assertEqual(score_groups('{{<ab>},{<ab>},{<ab>},{<ab>}}'), 9)
         self.assertEqual(score_groups('{{<!!>},{<!!>},{<!!>},{<!!>}}'), 9)
         self.assertEqual(score_groups('{{<a!>},{<a!>},{<a!>},{<ab>}}'), 3)
+
+    def test_count_garbage(self):
+        self.assertEqual(count_garbage('<>'), 0)
+        self.assertEqual(count_garbage('<random characters>'), 17)
+        self.assertEqual(count_garbage('<<<<>'), 3)
+        self.assertEqual(count_garbage('<{!>}>'), 2)
+        self.assertEqual(count_garbage('<!!>'), 0)
+        self.assertEqual(count_garbage('<!!!>>'), 0)
+        self.assertEqual(count_garbage('<{o"i!a,<{i<a>'), 10)
