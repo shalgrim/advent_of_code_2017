@@ -1,0 +1,34 @@
+def hash_string(string_length, twist_lengths):
+    curr_pos = 0
+    skip_size = 0
+    the_string = list(range(string_length))
+
+    for tl in twist_lengths:
+        assert tl <= string_length, 'this should continue instead of failing'
+
+        reverse_start = curr_pos
+        reverse_stop = curr_pos + tl
+
+        if reverse_stop <= string_length:
+            the_string[reverse_start:reverse_stop] = reversed(the_string[reverse_start:reverse_stop])
+        else:
+            leftover = reverse_stop - string_length
+            string_to_reverse = the_string[reverse_start:] + the_string[:leftover]
+            assert len(string_to_reverse) == tl
+            reversed_string = list(reversed(string_to_reverse))
+            the_string[reverse_start:] = reversed_string[:tl - leftover]
+            the_string[:leftover] = reversed_string[tl-leftover:]
+        assert len(the_string) == string_length
+
+        curr_pos = (curr_pos + tl + skip_size) % string_length
+        skip_size += 1
+
+    return the_string
+
+
+if __name__ == '__main__':
+    with open('data/input10.txt') as f:
+        content = f.read().strip()
+    the_string = [int(n) for n in content.split(',')]
+    processed = hash_string(256, the_string)
+    print(processed[0] * processed[1])
