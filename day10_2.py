@@ -5,15 +5,16 @@ from day10_1 import hash_string
 SUFFIX = [17, 31, 73, 47, 23]
 
 
-def run_rounds(start_sequence, num_rounds=64):
+def run_rounds(start_lengths, num_rounds=64):
     pos = 0
     skip_size = 0
-    original_sequence = copy(start_sequence)
+    original_lengths = copy(start_lengths)
+    the_input = list(range(256))
     for _ in range(num_rounds):
-        working_sequence = copy(original_sequence)
-        seq, pos, skip_size = hash_string(256, working_sequence, pos, skip_size)
+        working_lengths = copy(original_lengths)
+        the_input, pos, skip_size = hash_string(the_input, working_lengths, pos, skip_size)
 
-    return seq
+    return the_input
 
 
 def densify(elements):
