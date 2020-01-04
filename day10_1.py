@@ -1,6 +1,6 @@
-def hash_string(string_length, twist_lengths):
-    curr_pos = 0
-    skip_size = 0
+def hash_string(string_length, twist_lengths, start_pos=0, start_skip_size=0):
+    curr_pos = start_pos
+    skip_size = start_skip_size
     the_string = list(range(string_length))
 
     for tl in twist_lengths:
@@ -23,12 +23,12 @@ def hash_string(string_length, twist_lengths):
         curr_pos = (curr_pos + tl + skip_size) % string_length
         skip_size += 1
 
-    return the_string
+    return the_string, curr_pos, skip_size
 
 
 if __name__ == '__main__':
     with open('data/input10.txt') as f:
         content = f.read().strip()
     the_string = [int(n) for n in content.split(',')]
-    processed = hash_string(256, the_string)
+    processed = hash_string(256, the_string)[0]
     print(processed[0] * processed[1])
