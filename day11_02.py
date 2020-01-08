@@ -66,6 +66,7 @@ class Hex(object):
                     clockwise = neighbor.__getattribute__((direction + 2).name)
                     if clockwise:
                         self.__setattr__((direction + 1).name, clockwise)
+                        clockwise.__setattr__((direction - 2).name, self)
 
                 if not self.__getattribute__(
                     (direction - 1).name
@@ -74,6 +75,7 @@ class Hex(object):
                     ccw = neighbor.__getattribute__((direction - 2).name)
                     if ccw:
                         self.__setattr__((direction - 1).name, ccw)
+                        ccw.__setattr__((direction + 2).name, self)
 
             old_known_neighbors = known_neighbors
             known_neighbors = self.get_known_neighbors()
@@ -82,6 +84,7 @@ class Hex(object):
 if __name__ == '__main__':
     h = Hex()
     h2 = Hex(Direction.S, h)
+    h3 = Hex(Direction.NW, h2)  # TODO: create an add_neighbor method on Hex that makes this more intuitive
     print(h.get_known_neighbors(), h.distance)
     print(h2.get_known_neighbors(), h2.distance)
-
+    print(h3.get_known_neighbors(), h3.distance)
