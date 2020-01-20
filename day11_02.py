@@ -96,10 +96,44 @@ class Hex(object):
             known_neighbors = self.get_known_neighbors()
 
 
-if __name__ == '__main__':
+def some_tests():
     h = Hex()
     h2 = h.create_new_neighbor(Direction.N)
     h3 = h2.create_new_neighbor(Direction.SE)
     print(h.get_known_neighbors(), h.distance)
     print(h2.get_known_neighbors(), h2.distance)
     print(h3.get_known_neighbors(), h3.distance)
+
+
+def build_graph(directions):
+    root_hex = Hex()
+    all_hexes = set()
+    all_hexes.add(root_hex)
+    curr_hex = root_hex
+
+    for lower_case_direction in directions:
+        # is there a better way than using __members__?
+        direction = Direction.__members__[lower_case_direction.upper()]
+        dir_name = direction.name
+        if curr_hex.__getattribute__(dir_name):  # could I try walrus operator here?
+            curr_hex = curr_hex.__getattribute__(dir_name)
+        else:
+            curr_hex = curr_hex.create_new_neighbor(direction)
+            all_hexes.add(curr_hex)
+
+    return root_hex, all_hexes
+
+
+def main(content):
+    directions = content.split(',')
+    root_hex, all_hexes = build_graph(directions)
+    print(f'{len(all_hexes)=}')
+    max_distance = max([h.distance for h in all_hexes])
+    # only getting ten hexes and max_distance five which seems wrong
+    print(max_distance)
+
+
+if __name__ == '__main__':
+    with open('data/input11.txt') as f:
+        content = f.read().strip()
+    main(content)  # only getting ten hexes and max_distance five which seems wrong
