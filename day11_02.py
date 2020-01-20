@@ -42,7 +42,22 @@ class Hex(object):
         if not self.get_known_neighbors():
             self.distance = 0
         else:
-            self.distance = min([n.distance for n in self.get_known_neighbors().values()]) + 1
+            self.distance = (
+                min([n.distance for n in self.get_known_neighbors().values()]) + 1
+            )
+
+    def create_new_neighbor(self, direction):
+        """
+        Creates a new hex at this Hex's direction
+        :param direction: the direction of this Hex where to put the new neighbor
+        :return: the new hex created
+        """
+        assert (
+            self.__getattribute__(direction.name) is None
+        ), f"Can't create a neighbor at {direction} because one is already there"
+        other_direction = direction + 3
+        new_hex = Hex(other_direction, self)
+        return new_hex
 
     def get_known_neighbors(self):
         known_neighbors = {}
@@ -83,8 +98,8 @@ class Hex(object):
 
 if __name__ == '__main__':
     h = Hex()
-    h2 = Hex(Direction.S, h)
-    h3 = Hex(Direction.NW, h2)  # TODO: create an add_neighbor method on Hex that makes this more intuitive
+    h2 = h.create_new_neighbor(Direction.N)
+    h3 = h2.create_new_neighbor(Direction.SE)
     print(h.get_known_neighbors(), h.distance)
     print(h2.get_known_neighbors(), h2.distance)
     print(h3.get_known_neighbors(), h3.distance)
