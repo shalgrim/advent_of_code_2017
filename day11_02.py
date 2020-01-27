@@ -42,9 +42,42 @@ class Hex(object):
         if not self.get_known_neighbors():
             self.distance = 0
         else:
+            # I believe this is the bug. It doesn't work when you're out on a limb dangling
+            # So at the second se in my directions, I think I may be getting that one wrong
+            # And it's also not asking the distance anyway, it's asking the fewest steps
+            # So maybe the trick is to re-evaluate distance every time you pass through a hex?
+            # No that doesn't work because in the example 'ne,ne,s,s,' they say two steps away at 'se,se'
+            # But the first se never got visited
+            # So they do want the radius but I have to assume the whole map exists
             self.distance = (
                 min([n.distance for n in self.get_known_neighbors().values()]) + 1
             )
+
+    def __repr__(self):
+        formatted_directions = [
+            f'{d.name}: {self.__getattribute__(d.name)}'
+            for d in Direction
+            if self.__getattribute__(d.name)
+        ]
+        neighbor_string = ', ' + '; '.join(formatted_directions) if self.get_known_neighbors() else ''
+        return f'Hex: id: {id(self)}; distance: {self.distance}{neighbor_string}'
+
+    def __str__(self):
+        line0 = f'  {self.N.distance}  ' if self.N else ''
+
+        nw = str(self.NW.distance) if self.NW else ' '
+        ne = str(self.NE.distance) if self.NE else ' '
+        line1 = f'{nw}/-\{ne}'
+
+        line2 = f'  {self.distance}  '
+
+        sw = str(self.SW.distance) if self.SW else ' '
+        se = str(self.SE.distance) if self.SE else ' '
+        line3 = f'{sw}\_/{se}'
+
+        line4 = f'  {self.S.distance}  ' if self.S else ''
+
+        return '\n'.join([line0, line1, line2, line3, line4])
 
     def create_new_neighbor(self, direction):
         """
@@ -113,6 +146,8 @@ def build_graph(directions):
 
     for lower_case_direction in directions:
         # is there a better way than using __members__?
+        print(lower_case_direction)
+        print(curr_hex)
         direction = Direction.__members__[lower_case_direction.upper()]
         dir_name = direction.name
         if curr_hex.__getattribute__(dir_name):  # could I try walrus operator here?
@@ -129,11 +164,10 @@ def main(content):
     root_hex, all_hexes = build_graph(directions)
     print(f'{len(all_hexes)=}')
     max_distance = max([h.distance for h in all_hexes])
-    # only getting ten hexes and max_distance five which seems wrong
     print(max_distance)
 
 
 if __name__ == '__main__':
     with open('data/input11.txt') as f:
         content = f.read().strip()
-    main(content)  # only getting ten hexes and max_distance five which seems wrong
+    main(content)  # 5970 is too high
