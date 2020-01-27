@@ -17,7 +17,7 @@ def create_pipes(lines):
     return pipes
 
 
-def get_visitable_groups(pipes, program, visited=None):
+def get_visitable_programs(pipes, program, visited=None):
     if visited is None:
         visited = set([program])
     else:
@@ -26,14 +26,14 @@ def get_visitable_groups(pipes, program, visited=None):
     for neighbor in pipes[program]:
         if neighbor in visited:
             continue
-        visited.update(get_visitable_groups(pipes, neighbor, visited))
+        visited.update(get_visitable_programs(pipes, neighbor, visited))
 
     return visited
 
 
 def main(lines, program):
     pipes = create_pipes(lines)
-    return len(get_visitable_groups(pipes, program))
+    return len(get_visitable_programs(pipes, program))
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 from unittest import TestCase
 from day12_01 import main
+from day12_02 import get_num_groups
 
 
 class TestDay12(TestCase):
@@ -9,3 +10,6 @@ class TestDay12(TestCase):
 
     def test_main(self):
         self.assertEqual(main(self.lines, '0'), 6)
+
+    def test_get_num_groups(self):
+        self.assertEqual(get_num_groups(self.lines), 2)
