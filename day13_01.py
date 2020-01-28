@@ -29,7 +29,7 @@ def build_scanners(lines):
     return scanners
 
 
-def calculate_penalty(lines):
+def calculate_penalty_helper(lines, scanners):
     scanners = build_scanners(lines)
     firewall_length = max([s.depth for s in scanners]) + 1
     location = -1
@@ -43,6 +43,11 @@ def calculate_penalty(lines):
             scanner.tick()
 
     return penalty
+
+
+def calculate_penalty(lines):
+    scanners = build_scanners(lines)
+    return calculate_penalty_helper(lines, scanners)
 
 
 if __name__ == '__main__':
