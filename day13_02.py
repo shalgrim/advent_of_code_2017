@@ -16,6 +16,8 @@ def gets_caught(scanners):
     return False
 
 
+# I think I need to do it a different way, this takes too long
+# Should be possible with mods?
 def calc_delay(lines):
     base_scanners = build_scanners(lines)
     delay = 0
