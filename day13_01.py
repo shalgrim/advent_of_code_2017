@@ -5,6 +5,9 @@ class Scanner(object):
         self.location = 0
         self.descending = True
 
+    def __repr__(self):
+        return f'{self.location=}, {self.descending=}, {self.range=}, {self.depth=}'
+
     def tick(self):
         if self.descending:
             self.location += 1
@@ -16,7 +19,6 @@ class Scanner(object):
 
             if self.location == 0:
                 self.descending = True
-
 
 def build_scanners(lines):
     scanners = []
