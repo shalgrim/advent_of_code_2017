@@ -2,15 +2,28 @@ from day13_01 import build_scanners, calculate_penalty_helper
 from copy import deepcopy
 
 
+def gets_caught(scanners):
+    firewall_length = max([s.depth for s in scanners]) + 1
+    location = -1
+
+    while location < firewall_length:
+        location += 1
+        for scanner in scanners:
+            if scanner.depth == location and scanner.location == 0:
+                return True
+            scanner.tick()
+
+    return False
+
+
 def calc_delay(lines):
     base_scanners = build_scanners(lines)
     delay = 0
 
     while True:
         scanners = deepcopy(base_scanners)
-        penalty = calculate_penalty_helper(lines, scanners)
 
-        if penalty == 0:
+        if not gets_caught(scanners):
             return delay
 
         delay += 1
