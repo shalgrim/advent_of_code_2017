@@ -9,5 +9,4 @@ class TestDay15(TestCase):
         self.assertEqual(main(FACTOR_A, 65, FACTOR_B, 8921, 5), 1)
 
     def test_main_long_running(self):
-        # currently returning 156059
         self.assertEqual(main(FACTOR_A, 65, FACTOR_B, 8921, 40_000_000), 588)
