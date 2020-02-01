@@ -1,6 +1,9 @@
+from copy import copy
+
+
 def spin(data, programs):
     cycle = -int(data)
-    programs = programs[cycle:] + programs[:cycle]
+    return programs[cycle:] + programs[:cycle]
 
 
 def partner(data, programs):
@@ -10,6 +13,7 @@ def partner(data, programs):
     tmp = programs[i2]
     programs[i2] = programs[i1]
     programs[i1] = tmp
+    return programs
 
 
 def exchange(data, programs):
@@ -17,6 +21,7 @@ def exchange(data, programs):
     tmp = programs[i2]
     programs[i2] = programs[i1]
     programs[i1] = tmp
+    return programs
 
 
 PROGRAMS = {
@@ -27,10 +32,12 @@ PROGRAMS = {
 
 
 def run_program(instructions, programs):
+    foo_programs = copy(programs)
     for instruction in instructions:
         program = instruction[0]
         data = instruction[1:]
-        PROGRAMS[program](data, programs)
+        foo_programs = PROGRAMS[program](data, foo_programs)
+    return foo_programs
 
 
 if __name__ == '__main__':
@@ -39,5 +46,5 @@ if __name__ == '__main__':
 
     instructions = content.split(',')
     programs = [chr(i) for i in range(97, 97+16)]
-    run_program(instructions, programs)
-    print(''.join(programs))  # pbglcmjfedhanoik is not right
+    bar_programs = run_program(instructions, programs)
+    print(''.join(bar_programs))  # pbglcmjfedhanoik is not right
