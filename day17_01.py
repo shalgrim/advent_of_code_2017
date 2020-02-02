@@ -3,12 +3,12 @@ def main(num_steps):
     location = 0
 
     for i in range(1, 2018):
-        new_location = (location + num_steps) % len(buffer)
-        buffer.insert(new_location + 1, i)
-        new_location += 1
-        assert buffer[new_location] == i
+        location = (location + num_steps) % len(buffer)
+        buffer.insert(location + 1, i)
+        location += 1
+        assert buffer[location] == i
 
-    return buffer[new_location + 1]
+    return buffer[location + 1]
 
 
 if __name__ == '__main__':
