@@ -49,7 +49,7 @@ class Program(object):
             instruction = self.instructions[self.iptr]
             self.iptr += self.run_instruction(instruction)
         else:
-            self.finished = False
+            self.finished = True
 
 def done_or_deadlock(p1, p2):
     if (p1.waiting or p1.finished) and (p2.waiting or p2.finished):
