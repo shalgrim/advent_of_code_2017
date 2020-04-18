@@ -51,6 +51,7 @@ class Program(object):
         else:
             self.finished = True
 
+
 def done_or_deadlock(p1, p2):
     if (p1.waiting or p1.finished) and (p2.waiting or p2.finished):
         return True
@@ -77,4 +78,4 @@ if __name__ == '__main__':
     with open('data/input18.txt') as f:
         instructions = [line.strip().split() for line in f.readlines()]
     clean_instructions(instructions)
-    main(instructions)
+    print(main(instructions))
