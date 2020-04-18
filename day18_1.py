@@ -47,15 +47,19 @@ def main(instructions):
     return last_played
 
 
-if __name__ == '__main__':
-    with open('data/input18.txt') as f:
-        instructions = [line.strip().split() for line in f.readlines()]
-
+def clean_instructions(instructions):
     for instruction in instructions:
         for i, part in enumerate(instruction):
             try:
                 instruction[i] = int(part)
             except ValueError:
                 continue
+
+
+if __name__ == '__main__':
+    with open('data/input18.txt') as f:
+        instructions = [line.strip().split() for line in f.readlines()]
+
+    clean_instructions(instructions)
 
     main(instructions)
