@@ -79,12 +79,7 @@ def tick(lines, location, initial_direction):
 
 
 def main(lines, num_ticks=NUM_TICKS):
-    assert len(lines) % 2 == 1
-    assert len(lines[0]) % 2 == 1
-
-    midy = len(lines) // 2
-    midx = len(lines[0]) // 2
-    location = midx, midy
+    location = initalize_location(lines)
     direction = 0
     infection_ticks = 0
 
@@ -93,6 +88,16 @@ def main(lines, num_ticks=NUM_TICKS):
         infection_ticks += did_infect
 
     return infection_ticks
+
+
+def initalize_location(lines):
+    assert len(lines) % 2 == 1
+    assert len(lines[0]) % 2 == 1
+    midy = len(lines) // 2
+    midx = len(lines[0]) // 2
+    location = midx, midy
+
+    return location
 
 
 if __name__ == '__main__':
