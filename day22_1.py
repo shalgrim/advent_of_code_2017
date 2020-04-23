@@ -49,30 +49,6 @@ def move(lines, location, direction):
     return newlines, newloc
 
 
-def check_location(lines, location):
-    x, y = location
-    if 0 <= y < len(lines) and 0 <= x < len(lines[0]):
-        return lines, location
-    elif y < 0:
-        newlines = ['.' * len(lines[0])] + lines
-        newloc = x, 0
-    elif y == len(lines):
-        newlines = lines + ['.' * len(lines[0])]
-        newloc = location
-    elif x < 0:
-        newlines = []
-        for line in lines:
-            newlines.append('.' + line)
-        newloc = 0, y
-    elif x == len(lines[0]):
-        newlines = []
-        for line in lines:
-            newlines.append(line + '.')
-            newloc = location
-
-    return newlines, newloc
-
-
 def show_map(lines, location):
     lines_to_print = []
     for y, line in enumerate(lines):
@@ -98,9 +74,7 @@ def tick(lines, location, initial_direction):
 
     lines[y] = lines[y][:x] + replace_char + lines[y][x+1:]
     lines, final_location = move(lines, location, final_direction)
-    # print(f'{final_location=}')
-    # print(f'{final_direction=}')
-    # show_map(lines, final_location)
+
     return lines, final_location, final_direction, did_infect
 
 
@@ -117,12 +91,6 @@ def main(lines, num_ticks=NUM_TICKS):
     for underscore in range(num_ticks):
         lines, location, direction, did_infect = tick(lines, location, direction)
         infection_ticks += did_infect
-        # print(f'{location=}')
-        # print(f'{direction=}')
-        # print(f'{infection_ticks=}')
-        # show_map(lines, location)
-        # time.sleep(0.1)  # just for debugging to put a breakpoint
-
 
     return infection_ticks
 
@@ -131,4 +99,5 @@ if __name__ == '__main__':
     with open('data/input22.txt') as f:
         lines = [line.strip() for line in f.readlines()]
 
-    print(f'{main(lines)=}')  # 9970 is too big, kinda obviously...5451 too high too
+    print(f'{main(lines)=}')
+
