@@ -60,6 +60,6 @@ if __name__ == '__main__':
     with open('data/input18.txt') as f:
         instructions = [line.strip().split() for line in f.readlines()]
 
-    clean_instructions(instructions)
+    instructions = clean_instructions(instructions)
 
     main(instructions)
