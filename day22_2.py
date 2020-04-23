@@ -1,4 +1,4 @@
-from day22_1 import initalize_location, turn, move
+from day22_1 import initalize_location, move, turn
 
 
 def tick(lines, location, initial_direction):
@@ -20,7 +20,7 @@ def tick(lines, location, initial_direction):
     else:
         raise Exception('wut')
 
-    lines[y] = lines[y][:x] + replace_char + lines[y][x+1:]
+    lines[y] = lines[y][:x] + replace_char + lines[y][x + 1 :]
     lines, final_location = move(lines, location, final_direction)
 
     return lines, final_location, final_direction, did_infect

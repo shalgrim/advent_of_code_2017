@@ -1,6 +1,4 @@
-import time
-
-NUM_TICKS = 10_000
+NUM_TICKS = 10000
 
 
 def turn(initial_direction, right_or_left):
@@ -21,7 +19,7 @@ def move(lines, location, direction):
             newloc = location
         else:
             newlines = lines
-            newloc = x, y-1
+            newloc = x, y - 1
     elif direction == 1:
         if x == linelen - 1:
             newlines = []
@@ -29,13 +27,13 @@ def move(lines, location, direction):
                 newlines.append(line + '.')
         else:
             newlines = lines
-        newloc = x+1, y
+        newloc = x + 1, y
     elif direction == 2:
         if y == len(lines) - 1:
             newlines = lines + ['.' * linelen]
         else:
             newlines = lines
-        newloc = x, y+1
+        newloc = x, y + 1
     elif direction == 3:
         if x == 0:
             newlines = []
@@ -44,7 +42,7 @@ def move(lines, location, direction):
             newloc = location
         else:
             newlines = lines
-            newloc = x-1, y
+            newloc = x - 1, y
 
     return newlines, newloc
 
@@ -53,7 +51,7 @@ def show_map(lines, location):
     lines_to_print = []
     for y, line in enumerate(lines):
         if y == location[1]:
-            newline = line[:location[0]] + '*' + line[location[0] + 1:]
+            newline = line[: location[0]] + '*' + line[location[0] + 1 :]
             lines_to_print.append(newline)
         else:
             lines_to_print.append(line)
@@ -72,7 +70,7 @@ def tick(lines, location, initial_direction):
         replace_char = '#'
         did_infect = 1
 
-    lines[y] = lines[y][:x] + replace_char + lines[y][x+1:]
+    lines[y] = lines[y][:x] + replace_char + lines[y][x + 1 :]
     lines, final_location = move(lines, location, final_direction)
 
     return lines, final_location, final_direction, did_infect
@@ -105,4 +103,3 @@ if __name__ == '__main__':
         lines = [line.strip() for line in f.readlines()]
 
     print(f'{main(lines)=}')
-
