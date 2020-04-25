@@ -1,4 +1,4 @@
-from copy import deepcopy
+from copy import deepcopy, copy
 
 
 class Bridge:
@@ -26,6 +26,16 @@ class Bridge:
     @property
     def value(self):
         return sum(p.value for p in self.pipes)
+
+    @property
+    def next_need(self):
+        return self.needs[-1]
+
+    def __len__(self):
+        return len(self.pipes)
+
+    def __str__(self):
+        return f'Bridge: {self.value=} {len(self)=} {self.next_need=}'
 
 
 class Pipe:
@@ -56,7 +66,9 @@ def extend_bridges(bridges, pipes):
     for b in bridges:
         eligible_pipes = b.eligible_pipes(pipes.values())
         for ep in eligible_pipes:
-            newb = deepcopy(b)
+            newb = Bridge()
+            newb.pipes = copy(b.pipes)
+            newb.needs = copy(b.needs)
             newb.attach(ep)
             new_bridges.append(newb)
 
@@ -68,7 +80,7 @@ def main(lines):
     bridges = [Bridge()]
     new_bridges = extend_bridges(bridges, pipes)
 
-    while not new_bridges:
+    while new_bridges:
         bridges += new_bridges
         new_bridges = extend_bridges(new_bridges, pipes)
 
