@@ -23,6 +23,10 @@ def main():
     with open('data/input11.txt') as f:
         content = f.read().strip()
     directions = content.split(',')
+    return get_final_steps_away(directions)
+
+
+def get_final_steps_away(directions):
     counter = Counter(directions)
     do_easy_cancels(counter, 'n', 's')
     do_easy_cancels(counter, 'ne', 'sw')

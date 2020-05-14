@@ -1,5 +1,7 @@
 from enum import Enum, auto
 
+from day11_1 import get_final_steps_away
+
 
 class Direction(Enum):
     N = auto()
@@ -159,15 +161,22 @@ def build_graph(directions):
     return root_hex, all_hexes
 
 
+def get_furthest_away(directions):
+    furthest = 0
+    for i in range(len(directions)):
+        steps = get_final_steps_away(directions[:i])
+        if steps > furthest:
+            furthest = steps
+            print(f'{i=}, {furthest=}')
+    return furthest
+
+
 def main(content):
     directions = content.split(',')
-    root_hex, all_hexes = build_graph(directions)
-    print(f'{len(all_hexes)=}')
-    max_distance = max([h.distance for h in all_hexes])
-    print(max_distance)
+    return get_furthest_away(directions)
 
 
 if __name__ == '__main__':
     with open('data/input11.txt') as f:
         content = f.read().strip()
-    main(content)  # 5970 is too high
+    print(main(content))  # 1830 is too high

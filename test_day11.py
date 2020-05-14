@@ -1,0 +1,21 @@
+from unittest import TestCase
+
+from day11_1 import get_final_steps_away
+from day11_2 import get_furthest_away
+
+
+class TestDay11(TestCase):
+    def setUp(self):
+        with open('data/input11.txt') as f:
+            content = f.read().strip()
+        self.all_directions = content.split(',')
+
+    def test_part_1(self):
+        self.assertEqual(get_final_steps_away(self.all_directions), 824)
+
+    def test_early_steps(self):
+        self.assertEqual(get_final_steps_away([]), 0)
+        self.assertEqual(get_final_steps_away(self.all_directions[:1]), 1)
+
+    def test_part_2(self):
+        self.assertLess(get_furthest_away(self.all_directions, 1830))
