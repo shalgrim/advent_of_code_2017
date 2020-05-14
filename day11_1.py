@@ -11,6 +11,8 @@ def do_easy_cancels(counter, d1, d2):
 def do_hard_cancel(counter):
     leftovers = [k for k in counter.keys() if counter[k]]
 
+    # After all the easys, some will be down to zero, leaving only certain combos
+    # TODO: Add in the other combos...start with case where 'ne' and 's' are left
     if 's' in leftovers:
         if 'nw' and 'sw' in leftovers:
             if counter['nw'] < counter['s'] and counter['nw'] < counter['sw']:

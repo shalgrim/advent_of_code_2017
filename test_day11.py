@@ -10,6 +10,15 @@ class TestDay11(TestCase):
             content = f.read().strip()
         self.all_directions = content.split(',')
 
+    def test_part_1_a(self):
+        self.assertEqual(get_final_steps_away(['ne', 'ne', 'ne']), 3)
+        self.assertEqual(get_final_steps_away(['ne', 'ne', 'sw', 'sw']), 0)
+
+    def test_part_1_b(self):
+        """pulled these out of examples because they fail"""
+        self.assertEqual(get_final_steps_away(['ne', 'ne', 's', 's']), 2)
+        self.assertEqual(get_final_steps_away(['se', 'sw', 'se', 'sw', 'sw']), 3)
+
     def test_part_1(self):
         self.assertEqual(get_final_steps_away(self.all_directions), 824)
 
