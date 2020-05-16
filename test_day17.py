@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from day17_01 import main
+from day17_1 import main
 
 
 class TestDay17(TestCase):
