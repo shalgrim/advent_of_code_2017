@@ -20,6 +20,9 @@ class Scanner(object):
             if self.location == 0:
                 self.descending = True
 
+    def catches(self, delay):
+        return (delay + self.depth) % ((self.range - 1) * 2) == 0
+
 
 def build_scanners(lines):
     scanners = []

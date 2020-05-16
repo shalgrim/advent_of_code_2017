@@ -33,7 +33,16 @@ def calc_delay(lines):
             bs.tick()
 
 
+def calc_delay_mods(lines):
+    scanners = build_scanners(lines)
+    delay = 0
+    while any(s.catches(delay) for s in scanners):
+        delay += 1
+
+    return delay
+
+
 if __name__ == '__main__':
     with open('./data/input13.txt') as f:
         lines = [line.strip() for line in f.readlines()]
-    print(calc_delay(lines))
+    print(calc_delay_mods(lines))
