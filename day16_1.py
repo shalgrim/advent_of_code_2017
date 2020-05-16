@@ -40,6 +40,12 @@ def run_program(instructions, programs):
     return foo_programs
 
 
+def run_program_string(instructions, s):
+    programs = list(s)
+    output = run_program(instructions, programs)
+    return ''.join(output)
+
+
 if __name__ == '__main__':
     with open('./data/input16.txt') as f:
         content = f.read()
@@ -48,3 +54,4 @@ if __name__ == '__main__':
     programs = [chr(i) for i in range(97, 97+16)]
     bar_programs = run_program(instructions, programs)
     print(''.join(bar_programs))  # pbglcmjfedhanoik is not right
+    print(run_program_string(instructions, ''.join(programs)))
