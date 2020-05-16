@@ -27,4 +27,4 @@ class TestDay11(TestCase):
         self.assertEqual(get_final_steps_away(self.all_directions[:1]), 1)
 
     def test_part_2(self):
-        self.assertLess(get_furthest_away(self.all_directions, 1830))
+        self.assertEqual(get_furthest_away(self.all_directions), 1548)

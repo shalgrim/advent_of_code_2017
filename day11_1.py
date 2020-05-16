@@ -1,4 +1,39 @@
 from collections import Counter
+from enum import Enum, auto
+
+
+class Direction(Enum):
+    N = auto()
+    NE = auto()
+    SE = auto()
+    S = auto()
+    SW = auto()
+    NW = auto()
+
+    def __sub__(self, other):
+        if not isinstance(other, Direction):
+            raise TypeError(f'unsupported right-hand operator for -: {type(other)}')
+
+        small, big = sorted([self.value, other.value])
+        diff = big - small
+
+        if diff == 0:
+            return 0
+        elif diff in (1, 5):
+            return 1
+        elif diff in (2, 4):
+            return 2
+        return 3
+
+
+DIRECTION_MAP = {
+    'n': Direction.N,
+    'ne': Direction.NE,
+    'se': Direction.SE,
+    's': Direction.S,
+    'sw': Direction.SW,
+    'nw': Direction.NW,
+}
 
 
 def do_easy_cancels(counter, d1, d2):
@@ -9,16 +44,42 @@ def do_easy_cancels(counter, d1, d2):
 
 
 def do_hard_cancel(counter):
+    """
+    After taking out the easy cancels on all three axes, figure out the remaining steps. NB: This moves things into
+    potentially the wrong counter spots, this is just meant to give an accurate count at the end
+    :param counter: dict counting number of moves by direction
+    :return: None (but there are side effects on counter
+    """
     leftovers = [k for k in counter.keys() if counter[k]]
+    assert len(leftovers) <= 3, f'{leftovers=}'
 
-    # After all the easys, some will be down to zero, leaving only certain combos
-    # TODO: Add in the other combos...start with case where 'ne' and 's' are left
-    if 's' in leftovers:
-        if 'nw' and 'sw' in leftovers:
-            if counter['nw'] < counter['s'] and counter['nw'] < counter['sw']:
-                counter['s'] -= counter['nw']
-                counter['sw'] += counter['nw']
-                counter['nw'] -= counter['nw']
+    if len(leftovers) <= 1:
+        return
+    elif len(leftovers) == 2:
+        if counter[leftovers[0]] > counter[leftovers[1]]:
+            big_key, small_key = leftovers
+        else:
+            small_key, big_key = leftovers
+
+        spaces_apart = DIRECTION_MAP[leftovers[0]] - DIRECTION_MAP[leftovers[1]]
+
+        if spaces_apart == 3:  # just straight up cancellation
+            # should never be here, this should be covered in easy cancels
+            counter[big_key] -= counter[small_key]
+            counter[small_key] = 0
+        elif spaces_apart == 2:
+            counter[small_key] = 0
+        elif spaces_apart == 1:
+            pass  # noop
+        else:
+            raise AssertionError(f'{spaces_apart=}')
+    else:
+        leftovers_with_values = [(k, counter[k]) for k in leftovers]
+        leftovers_with_values.sort(key=lambda x: x[1])
+        small_key, mid_key, big_key = [tpl[0] for tpl in leftovers_with_values]
+        counter[big_key] -= counter[small_key]
+        counter[mid_key] += counter[small_key]
+        counter[small_key] = 0
 
 
 def main():
