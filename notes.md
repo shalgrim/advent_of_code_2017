@@ -24,3 +24,24 @@
 - So is it as simple as (delay + depth) % ((range - 1) * 2) == 0?
 - I think so, let's try the test case
 - That worked, though I'm sure there's a faster way of mathing it instead of iterating
+
+## Day 17
+
+### Part 2
+
+- It seems like the value 0 will always be at index 0 in the buffer
+- That makes sense...if the insert location is 0, it goes after (puts it in index 1)
+- If the insert location is the last item, it goes after that extending the list
+- So the question then becomes what value is in buffer[1] at 50,000,000 iterations
+- Keeping a list of 50,000,001 seems inefficient
+- The first several values to go there are 1, 4, 7, 10, 39, 50, 306, 449
+- And what would be great is to create a function where you plug in one of those values and get the next
+- Then you run that function until you get a number bigger than 50 million and the answer is the input before that
+- After a number x gets inserted into location 1, the list is x+1 items long
+- And then "location" is consider
+- The next location is always (num_steps + location) % len(buffer)
+- And in the case where a value x just got dropped into location 1, then it's
+- new_location = 387 % (x+1)
+- and then it's 386+(new_location) % (x+2)
+- and so on until you get a value that's 1
+- and x + ? is your new x?
