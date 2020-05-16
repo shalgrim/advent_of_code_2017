@@ -30,6 +30,7 @@ def discover_loop(s):
         rotations += 1
 
     print(f'found loop on {rotated}. Seen on rotations {seen[rotated]} and {rotations}')
+    print(seen)
 
 
 if __name__ == '__main__':
