@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from day16_02 import rotate
+from day16_2 import rotate
 
 
 class TestDay16(TestCase):
