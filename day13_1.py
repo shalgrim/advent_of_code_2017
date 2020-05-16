@@ -20,6 +20,7 @@ class Scanner(object):
             if self.location == 0:
                 self.descending = True
 
+
 def build_scanners(lines):
     scanners = []
 
