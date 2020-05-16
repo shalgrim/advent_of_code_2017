@@ -1,6 +1,6 @@
 from unittest import TestCase
-from day13_01 import calculate_penalty
-from day13_02 import calc_delay
+from day13_1 import calculate_penalty
+from day13_2 import calc_delay
 
 
 class TestDay13(TestCase):
