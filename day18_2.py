@@ -65,9 +65,11 @@ def main(instructions):
     p1.partner = p0
 
     while not done_or_deadlock(p0, p1):
+        print(f'{p1.num_sent=}')
         while not (p0.waiting or p0.finished):
             p0.tick()
 
+        print(f'{p0.num_sent=}')
         while not (p1.waiting or p1.finished):
             p1.tick()
 
