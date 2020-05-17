@@ -45,3 +45,15 @@
 - and then it's 386+(new_location) % (x+2)
 - and so on until you get a value that's 1
 - and x + ? is your new x?
+- maybe if I visualize some
+- 1 to 4 to 7
+
+```md
+0 1
+0 1 2  
+0 1 3 2  (386 % 3 = 2)
+0 4 1 3 2 (386 % 4 = 2)
+0 4 1 5 3 2 (386 % 5 = 1)
+0 4 1 5 3 2 6 (386 % 6 = 2)
+0 7 4 1 5 3 2 6 (386 % 7 = 1 
+```

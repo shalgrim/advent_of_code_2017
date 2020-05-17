@@ -10,6 +10,28 @@ logging.basicConfig(filename='day17_2.log',
 logger.addHandler(StreamHandler(sys.stdout))
 
 
+def get_next(x, num_steps):
+    """x is at position 1, list is x+1 long"""
+    location = (num_steps + 1) % (x+1) + 1
+
+    while location != 1:
+        x += 1
+        location = (num_steps + location) % (x + 1) + 1
+
+    return x + 1
+
+
+def main_v2(num_steps):
+    prev_x = 0
+    curr_x = 1
+    while curr_x < 50_000_000:
+        prev_x = curr_x
+        curr_x = get_next(curr_x, num_steps)
+        print(f'{curr_x=}')
+
+    return prev_x
+
+
 def main(num_steps):
     buffer = [0]
     location = 0
@@ -32,4 +54,5 @@ def main(num_steps):
 
 
 if __name__ == '__main__':
-    print(main(386))
+    # print(main(386))
+    print(main_v2(386))
